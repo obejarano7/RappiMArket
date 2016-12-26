@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="urf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="CSS/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="CSS/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="CSS/bootstrap-table.min.css">
+    <link rel="stylesheet" type="text/css" href="CSS/font-awesome.min.css">
+    <link type="text/css" href="FONTS/">
+    <script type="text/javascript" src="JS/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="JS/bootstrap.min.js"></script>
+    <script type="text/javascript" src="JS/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="JS/bootstrap-table-natural-sorting.js"></script>
+    <script type="text/javascript" src="JS/bootstrap-table-filter-control.js"></script>
+    <script type="text/javascript" src="JS/bootstrap-table-mobile.js"></script>
+    <script type="text/javascript" src="JS/bootstrap-table-multiple-sort.js"></script>
+    <script type="text/javascript" src="JS/waitingfor.js"></script>
+    <script type="text/javascript" src="JS/RappiMarket.js"></script>
+    <title>RappiMarket</title>
+    <script type="text/javascript">
+        
+    </script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                </button>
+                <a class="navbar-brand" href="#"><img src="RESOURCES/logo-rappi-small.png" class="img-responsive"></a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <div class="row nav navbar-nav navbar-right">
+
+                    <div class="col-xs-2 col-md-4 col-sm-4">
+                        <span class="fa-stack fa-2x">
+                            <i style="color:#FD6250" class="fa fa-comment fa-stack-1x"></i>
+                            <strong style="font-size:12px;" id="count" class="fa-stack-1x fa-stack-text fa-inverse">0</strong>
+                        </span>
+                    </div>
+                    <div class="col-xs-2 col-md-4 col-sm-4">
+                        <span style="cursor: pointer;" onclick="javascript:rappi.openCharShop();">
+                            <i style="color:#FD6250" class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-3">
+                
+                    <div class="form-group">
+                        <input type="text" name="url" class="form-control" placeholder="Url web">
+                        
+                    </div>
+            
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-3">
+                <input type="button" class="btn btn-primary" name="submit" value="Cargar Catalogo" onclick="javascript:operation.processJsonFile()"; />
+            </div>
+        </div>
+        <div class="row" style="display: none;" id="row_warning">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <span style="color: red;">Ingrese una url web valida. la url debe contener el protocolo http al inicio.</span>            
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-sm-12">
+                <table id="table" data.toggle="table" data-show-multi-sort="true" data-sort-priority='[{"sortName":"name","sortOrder":"desc"}]' data-filter-control="true" data-pagination="true" data-page-size="5" data-page-list="[5, 10, 20, 25, 50, 100, 200]" data-mobile-responsive="true" data-card-view="true" data-show-toggle="true" data-show-columns="true">
+                    <thead>
+                        
+                        <tbody>
+                        </tbody>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_advancedSearch">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                    <h4 class="modal-title">Advanced Search</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class=""></div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 ">
+                            <div class="form-group">
+                                <select id="FilterType" class="form-control">
+                        <option value="More">More Than</option>
+                        <option value="Less">Less Than</option>
+                    </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="number" id="price" min="1" class="form-control" placeholder="PRICE">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="javascript:rappi.AdvancedFilter();">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modal_CarShop">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                    <h4 class="modal-title">Rappi CarShop</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="buyProducts" class="btn btn-primary" onclick="rappi.buyProducts();">Buy Now!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script type="text/javascript">
+
+    
+</script>

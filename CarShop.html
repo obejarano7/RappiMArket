@@ -1,0 +1,76 @@
+<div id="container" class="container-fluid"></div>
+<script type="text/javascript">
+	var id_carShopProducts = sessionStorage.getItem("id_products").split(',');
+	var marketProducts = rappi.getProducts();
+	var total = 0;
+	var content = "<div class=\"row\">"+
+							"<div class=\"col-xs-4 col-sm-4 col-md-1\">"+
+								"<div class=\"form-group\"><strong>Code</strong></div>"+		
+							"</div>"+
+							"<div class=\"col-xs-4 col-sm-4 col-md-2\">"+
+								"<div class=\"form-group\"><strong>Product</strong></div>"+		
+							"</div>"+
+							"<div class=\"col-xs-4 col-sm-4 col-md-2\">"+
+								"<div class=\"form-group\"><strong>Price</strong></div>"+		
+							"</div>"+
+							"<div class=\"col-xs-6 col-sm-6 col-md-4\">"+
+								"<div class=\"form-group\"><strong>Quantity</strong></div>"+
+							"</div>"+
+							"<div class=\"col-xs-6 col-sm-6 col-md-3\">"+
+								"<div class=\"form-group\"><strong>Total</strong></div>"+
+							"</div>"+
+						"</div>";
+
+	for(i in id_carShopProducts){
+		
+		if(id_carShopProducts[i] != ""){
+			var carShopProducts = $.grep(marketProducts, function(item) {
+            		return item.id == id_carShopProducts[i];
+        		});
+			total += Number(carShopProducts[0].price.split('.').join(''));
+			content +=  "<div class=\"row\" id=\"row_"+carShopProducts[0].id+"\">"+
+							"<div class=\"col-xs-4 col-sm-4 col-md-1\">"+
+								"<div class=\"form-group\">"+
+									carShopProducts[0].id+
+								"</div>"+		
+							"</div>"+
+							"<div class=\"col-xs-4 col-sm-4 col-md-2\">"+
+								"<div class=\"form-group\">"+
+									carShopProducts[0].name+
+								"</div>"+		
+							"</div>"+
+							"<div class=\"col-xs-4 col-sm-4 col-md-2\">"+
+								"<div class=\"form-group\">"+
+									carShopProducts[0].price.split('.').join('')+
+								"</div>"+		
+							"</div>"+
+							"<div class=\"col-xs-6 col-sm-6 col-md-3\">"+
+								"<div class=\"form-group\">"+
+									"<input type=\"number\" id=\"quantity_"+carShopProducts[0].id+"\" min=\"1\" max=\"99\" class=\"form-control\" price=\""+carShopProducts[0].price+"\" placeholder=\"QUANTITY\" value=\"1\" onchange=\"javascript:rappi.calculateTotalPrice('"+carShopProducts[0].id+"')\">"+
+								"</div>"+
+							"</div>"+
+							"<div class=\"col-xs-6 col-sm-6 col-md-3\">"+
+								"<div class=\"form-group\">"+
+									"<input type=\"text\" id=\"total_"+carShopProducts[0].id+"\" class=\"form-control\" value=\""+carShopProducts[0].price.split('.').join('')+"\" ReadOnly=\"ReadOnly\">"+
+								"</div>"+
+							"</div>"+
+							"<div class=\"col-xs-1 col-sm-1 col-md-1\">"+
+								"<div class=\"form-group\">"+
+									"<a style='cursor:pointer;' id='delBuy_" + carShopProducts[0].id + "' onclick=\"javascript:rappi.delToBuy('del_" + carShopProducts[0].id + "', '" + carShopProducts[0].id + "')\"><i class = 'fa fa-minus-circle' aria-hidden='true'></i></a>"+
+								"</div>"+
+							"</div>"+
+						"</div>"
+		}
+	}
+
+	content +=  "<div class=\"row\">"+
+						"<div class=\"col-xs-offset-6 col-xs-6 col-sm-offset-6 col-sm-6 col-md-offset-8 col-md-3\">"+
+								"<div class=\"form-group\">"+
+									"<input type=\"text\" id=\"totalBuy\" class=\"form-control\" value=\""+total+"\" ReadOnly=\"ReadOnly\">"+
+								"</div>"+
+						"</div>"+		
+					"</div>";
+		$("#container").empty().append(content);
+
+</script>
+
